@@ -1,0 +1,51 @@
+# Sanitized excerpt — one SAM build artifact fanned out to many Lambdas.
+#
+# 19 of the platform's 25 functions deploy from a single CodeUri differing
+# only by Handler: one build, one dependency set, one atomic `sam deploy`.
+# Per-function settings (memory, timeout, reserved concurrency, env) stay
+# declarative in the template.
+#
+# Hard-won corollary: because config/env/layers live HERE and not in the
+# zip, disaster recovery is `sam deploy` from the committed template — a
+# code-only zip restore silently loses configuration. And any hotfix pushed
+# with raw `update-function-code` is wiped by the next `sam deploy` unless
+# the source tree is committed too. Both lessons are encoded in the team
+# runbook because both were learned the hard way.
+
+Globals:
+  Function:
+    Runtime: python3.11
+    MemorySize: 256
+    Timeout: 30
+    Environment:
+      Variables:
+        REGION: !Ref AWS::Region
+        LEADS_TABLE: !Ref LeadsTable
+
+Resources:
+  DashboardStatsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/                      # same artifact...
+      Handler: dashboard_stats.handler   # ...different entry point
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            Path: /dashboard/stats
+            Method: GET
+
+  StatusEngineFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: status_engine.handler
+      MemorySize: 512
+      Timeout: 900                       # wall-clock budgeted batch run
+      ReservedConcurrentExecutions: 1    # pacing state must never be doubled
+      Events:
+        Daily:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 14 * * ? *)
+            Enabled: false               # ship dark; a human flips it on
