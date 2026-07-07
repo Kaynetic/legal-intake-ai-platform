@@ -1,8 +1,8 @@
 # Legal Intake AI Platform — Case Study
 
-A production, multi-agent AI system that runs the **entire lead-intake operation of a U.S. personal-injury law firm**: website chat → qualification → e-signed retainer → CRM case → automated chase of unresponsive leads → AI-assisted case work. Designed, built, deployed, and operated end-to-end by one engineer (me), live in production since 2025.
+A production, multi-agent AI system that runs the **entire lead-intake operation of a U.S. personal-injury law firm**: website chat → qualification → e-signed retainer → CRM case → automated chase of unresponsive leads → AI-assisted case work. Designed, built, deployed, and operated end-to-end by a two-person team — [Kamogelo Mahlasela](https://github.com/Kaynetic) and [Masego Letsoko](https://github.com/SegoML) — live in production since 2025.
 
-> **About this repo.** This is a case study of a live client system. The client and all identifying details are anonymized; code in [`excerpts/`](excerpts/) is sanitized and representative, not the production source. The real system is private client property — I walk through it in interviews.
+> **About this repo.** This is a case study of a live client system. The client and all identifying details are anonymized; code in [`excerpts/`](excerpts/) is sanitized and representative, not the production source. The real system is private client property — we walk through it in interviews.
 
 ---
 
@@ -108,14 +108,14 @@ React 19 + TypeScript + Vite 7 + Tailwind 4 + TanStack Query, served from CloudF
 
 **Compliance encoded, not documented.** TCPA consent gates calling. Forbidden phrases are enforced in the letter generator. Recording-consent disclosure is part of the call flow. The rule of thumb: if a lawyer would ask "can you prove it?", the system writes an artifact.
 
-**Operate like a team, alone.** Versioned S3 backup regime for every Lambda before any edit; a full-account baseline snapshot; an error-scanner Lambda that sweeps CloudWatch logs with a benign-pattern suppression list so real errors aren't buried; audit logging to a dedicated table; forensic post-mortems with evidence (a July lead-drop investigation cleared the code and pinned the cause on an ad-campaign misconfiguration — with the receipts).
+**Operate like a team bigger than two.** Versioned S3 backup regime for every Lambda before any edit; a full-account baseline snapshot; an error-scanner Lambda that sweeps CloudWatch logs with a benign-pattern suppression list so real errors aren't buried; audit logging to a dedicated table; forensic post-mortems with evidence (a July lead-drop investigation cleared the code and pinned the cause on an ad-campaign misconfiguration — with the receipts).
 
 ## Results
 
 - The firm's intake now runs 24/7 in two languages with zero-touch retainer signing.
 - Previously-abandoned leads are systematically re-engaged under consent and SOL constraints.
 - Marketing spend is attributable end-to-end: ad → landing domain → chat → signed case → CRM, with server-side CAPI events verified delivering at 100% in the most recent audit.
-- Operated in production by a single engineer with a clean incident record and evidence-backed post-mortems.
+- Operated in production by a two-person team with a clean incident record and evidence-backed post-mortems.
 
 ## Sanitized excerpts
 
@@ -124,3 +124,7 @@ React 19 + TypeScript + Vite 7 + Tailwind 4 + TanStack Query, served from CloudF
 | [`excerpts/bedrock_paced_client.py`](excerpts/bedrock_paced_client.py) | Surviving a hard RPM quota: pacing + full-jitter backoff + fail-safe dispositions |
 | [`excerpts/sam_shared_artifact.yaml`](excerpts/sam_shared_artifact.yaml) | One SAM artifact fanned out to many Lambda handlers |
 | [`excerpts/ai_disposition_contract.md`](excerpts/ai_disposition_contract.md) | Constraining an LLM to a strict, auditable JSON decision contract |
+
+---
+
+*Built by [Kamogelo Mahlasela](https://github.com/Kaynetic) and [Masego Letsoko](https://github.com/SegoML).*
