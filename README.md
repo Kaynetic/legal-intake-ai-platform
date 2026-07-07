@@ -2,7 +2,7 @@
 
 A production, multi-agent AI system that runs the **entire lead-intake operation of a U.S. personal-injury law firm**: website chat → qualification → e-signed retainer → CRM case → automated chase of unresponsive leads → AI-assisted case work. Designed, built, deployed, and operated end-to-end by a two-person team — [Kamogelo Mahlasela](https://github.com/Kaynetic) and [Masego Letsoko](https://github.com/SegoML) — live in production since 2025.
 
-> **About this repo.** This is a case study of a live client system. The client and all identifying details are anonymized; code in [`excerpts/`](excerpts/) is sanitized and representative, not the production source. The real system is private client property — we walk through it in interviews.
+> **About this repo.** This is a case study of a live client system. The client and all identifying details are anonymized; code in [`excerpts/`](excerpts/) is sanitized and representative, not the production source. The real system is private client property — we walk through it in interviews. All rights reserved — see the [copyright notice](#copyright--permitted-use) below.
 
 ---
 
@@ -128,3 +128,9 @@ React 19 + TypeScript + Vite 7 + Tailwind 4 + TanStack Query, served from CloudF
 ---
 
 *Built by [Kamogelo Mahlasela](https://github.com/Kaynetic) and [Masego Letsoko](https://github.com/SegoML).*
+
+## Copyright & permitted use
+
+© 2026 Kamogelo Mahlasela and Masego Letsoko. **All rights reserved.**
+
+This repository is published for **viewing only**, so prospective employers, clients, and collaborators can evaluate our work. **No license is granted.** Beyond viewing on GitHub (and the limited on-platform rights GitHub's Terms of Service provide), no part of this repository — text, architecture diagrams, or code excerpts — may be copied, reproduced, modified, distributed, or used to create derivative works without our prior written permission.
