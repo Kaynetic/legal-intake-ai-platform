@@ -21,45 +21,45 @@ Three cooperating AI workers, one command-center dashboard, one serverless AWS b
 
 ```mermaid
 flowchart TB
-    subgraph Acquisition
-        ADS[Paid ads: Google / YouTube / Meta] --> LP[3 landing domains]
-        LP --> W[Chat widget]
+    subgraph Acquisition["Acquisition"]
+        ADS["Paid ads - Google, YouTube, Meta"] --> LP["3 landing domains"]
+        LP --> W["Chat widget"]
     end
 
-    subgraph Agent1[Agent 1 — Intake chatbot]
-        W --> LEX[Lex V2 bot + Lambda orchestrator<br/>bilingual EN/ES]
-        LEX --> TCPA[TCPA consent capture]
-        LEX --> RF[Red-flag detection<br/>on typed narratives]
-        TCPA --> RET[Retainer e-sign flow<br/>PDF generation + signed-waiver storage]
+    subgraph Agent1["Agent 1 - Intake chatbot"]
+        W --> LEX["Lex V2 bot + Lambda orchestrator<br/>bilingual EN/ES"]
+        LEX --> TCPA["TCPA consent capture"]
+        LEX --> RF["Red-flag detection<br/>on typed narratives"]
+        TCPA --> RET["Retainer e-sign flow<br/>PDF generation + signed-waiver storage"]
     end
 
-    subgraph Agent2[Agent 2 — Lead-chase engine]
-        SCHED[EventBridge daily schedules] --> STATUS[Bedrock Claude status engine<br/>chase / stop / paralegal]
-        STATUS --> SEQ[16-day multi-channel sequence<br/>email · SMS · voice]
-        SEQ --> VOICE[TCPA-compliant Twilio IVR<br/>see voice-engine repo]
+    subgraph Agent2["Agent 2 - Lead-chase engine"]
+        SCHED["EventBridge daily schedules"] --> STATUS["Bedrock Claude status engine<br/>chase / stop / paralegal"]
+        STATUS --> SEQ["16-day multi-channel sequence<br/>email, SMS, voice"]
+        SEQ --> VOICE["TCPA-compliant Twilio IVR<br/>see voice-engine repo"]
     end
 
-    subgraph Agent3[Agent 3 — AI paralegal]
-        PIPE[10-stage case pipeline] --> LOR[Letter-of-representation generation]
-        LOR --> SEND[Carrier delivery: email + fax relay]
+    subgraph Agent3["Agent 3 - AI paralegal"]
+        PIPE["10-stage case pipeline"] --> LOR["Letter-of-representation generation"]
+        LOR --> SEND["Carrier delivery - email + fax relay"]
     end
 
-    subgraph Core
-        API[API Gateway HTTP API + Cognito JWT] --> L[25 Lambda functions, Python 3.11]
-        L --> DDB[(8 DynamoDB tables)]
-        L --> CRM[Legal case-management CRM<br/>REST integration]
-        L --> SM[Secrets Manager]
+    subgraph Core["Core"]
+        API["API Gateway HTTP API + Cognito JWT"] --> L["25 Lambda functions, Python 3.11"]
+        L --> DDB[("8 DynamoDB tables")]
+        L --> CRM["Legal case-management CRM<br/>REST integration"]
+        L --> SM["Secrets Manager"]
     end
 
-    subgraph Ops[Command center]
-        DASH[React 19 dashboard<br/>CloudFront + S3] --> API
+    subgraph Ops["Command center"]
+        DASH["React 19 dashboard<br/>CloudFront + S3"] --> API
     end
 
     RET --> CRM
     LEX --> DDB
     STATUS --> CRM
     SEQ --> DDB
-    ADS -.->|server-side CAPI events| META[Meta Conversions API]
+    ADS -.->|"server-side CAPI events"| META["Meta Conversions API"]
 ```
 
 ### Agent 1 — Intake chatbot
